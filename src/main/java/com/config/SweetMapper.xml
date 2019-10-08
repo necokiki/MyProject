@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SweetMapper">
+
+	<insert id="sweetAdd" parameterType="SweetDTO">
+		insert into sweet(num,userid,wCode,wName,wWork,wCategory,artistname)
+		values(sweet_seq.nextval,#{userid},#{wCode},#{wName},#{wWork},#{wCategory},#{artistname})
+	</insert>
+	
+	
+	<select id="sweetList" parameterType="string" resultType="SweetDTO">
+	
+	select num,userid,wCode,wName,wWork,artistName
+	from sweet
+	where userid=#{userid}
+
+	</select>
+	
+	<select id="sweetCheck" parameterType="string" resultType="SweetDTO">
+	
+	select wCode
+	from sweet
+	where userid=#{userid}
+	</select>
+	
+	<select id="cartByNum" parameterType="string" 
+	resultType="SweetDTO">
+	 select artistname, wCode,  wName, wWork
+	from sweet
+	 where wCode=#{wCode}
+	</select>
+	
+	
+	<delete id="sweetDel" parameterType="string">
+		delete from sweet
+		where num=#{num}
+	</delete>
+	
+	<delete id="sweetAllDel" parameterType="string">
+		delete from sweet
+		where userid=#{userid}
+	</delete>
+	
+
+	<select id="sweetChartSource" resultType="string">
+		select wCategory
+		from sweet
+	</select> 
+	
+</mapper>

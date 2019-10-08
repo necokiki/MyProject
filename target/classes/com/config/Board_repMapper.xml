@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Board_repMapper">
+
+
+	<insert id="reply" parameterType="HashMap">
+		insert into bor_reply
+		(reply_id,boardno,reply_content,userid)
+		values(reply_id_seq.NEXTVAL,#{boardno},#{reply_content},#{userid})
+	</insert>
+
+	<select id="replyList" parameterType="int" resultType="Board_repDTO">
+		select board.boardno,bor_reply.userid,
+		board.title, board.content, bor_reply.reply_content,bor_reply.boardno
+		from board, bor_reply
+		where bor_reply.boardno like #{board.boardno}
+	</select>
+
+	<select id="boardView_rep" parameterType="int" resultType="Board_repDTO">
+		select reply_id, boardno, REPLY_CONTENT,ARTISTNAME,USERID, to_char(reply_writeday, 'yyyy/MM/dd HH:MI:SS') reply_writeday
+		from bor_reply
+		where boardno = #{boardno}
+		order by reply_writeday desc
+	</select>
+
+</mapper>
